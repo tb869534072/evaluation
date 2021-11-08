@@ -84,19 +84,21 @@ data.forEach(obj => {
 
 // Event Listener
 window.onload = () => {
-    document.getElementById("box1").addEventListener("change", (event) => {sync(event, "box1");});
-    document.getElementById("box2").addEventListener("change", (event) => {sync(event, "box2");});
+    document.getElementById("box1").addEventListener("change", () => {sync();});
+    document.getElementById("box2").addEventListener("change", () => {sync();});
 }
 
-const sync = (event, id) => {
+const sync = () => {
     let body = document.getElementById("tbody");
     while (body.firstChild) {
         body.removeChild(body.firstChild);
     }
 
-    let input = event.target.value;
+    let b1 = document.getElementById("box1");
+    let b2 = document.getElementById("box2");
 
-    if (input === "all") {
+    // Different filter with different situation
+    if (b1.options[b1.selectedIndex].text === "all" && b2.options[b2.selectedIndex].text === "all") {
         data.forEach(obj => {
             let newRow = document.createElement("tr");
             let newCol1 = document.createElement("td");
@@ -111,8 +113,38 @@ const sync = (event, id) => {
             newRow.appendChild(newCol3);
             tbody.appendChild(newRow);
         });
+    } else if (b1.options[b1.selectedIndex].text === "all") {
+        data.filter(ele => b2.options[b2.selectedIndex].text === ele["model"]).forEach(obj => {
+            let newRow = document.createElement("tr");
+            let newCol1 = document.createElement("td");
+            newCol1.innerHTML = obj["region"];
+            let newCol2 = document.createElement("td");
+            newCol2.innerHTML = obj["model"];
+            let newCol3 = document.createElement("td");
+            newCol3.innerHTML = obj["sales"];
+    
+            newRow.appendChild(newCol1);
+            newRow.appendChild(newCol2);
+            newRow.appendChild(newCol3);
+            tbody.appendChild(newRow);
+        });
+    } else if (b2.options[b2.selectedIndex].text === "all") {
+        data.filter(ele => b1.options[b1.selectedIndex].text === ele["region"]).forEach(obj => {
+            let newRow = document.createElement("tr");
+            let newCol1 = document.createElement("td");
+            newCol1.innerHTML = obj["region"];
+            let newCol2 = document.createElement("td");
+            newCol2.innerHTML = obj["model"];
+            let newCol3 = document.createElement("td");
+            newCol3.innerHTML = obj["sales"];
+    
+            newRow.appendChild(newCol1);
+            newRow.appendChild(newCol2);
+            newRow.appendChild(newCol3);
+            tbody.appendChild(newRow);
+        });
     } else {
-        data.filter(ele => ((id === "box1") ? ele["region"] : ele["model"]) === input).forEach(obj => {
+        data.filter(ele => b1.options[b1.selectedIndex].text === ele["region"]).filter(ele => b2.options[b2.selectedIndex].text === ele["model"]).forEach(obj => {
             let newRow = document.createElement("tr");
             let newCol1 = document.createElement("td");
             newCol1.innerHTML = obj["region"];
