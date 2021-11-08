@@ -11,6 +11,7 @@ const data = [
     { region: 'CA', model: 'D', sales: 400 },
 ];
 
+// Add options to the drop boxes
 let set = new Set();
 data.forEach(obj => {
     set.add(obj["region"]);
@@ -36,9 +37,7 @@ models.forEach(model => {
 })
 
 
-
-
-
+// Creating tags for table
 let table = document.createElement("table");
 let thead = document.createElement("thead");
 let tbody = document.createElement("tbody");
@@ -67,7 +66,7 @@ thead.appendChild(row1);
 
 
 
-
+// Creating and adding data to rows of the table
 data.forEach(obj => {
     let newRow = document.createElement("tr");
     let newCol1 = document.createElement("td");
@@ -83,12 +82,13 @@ data.forEach(obj => {
     tbody.appendChild(newRow);
 });
 
+// Event Listener
 window.onload = () => {
-    document.getElementById("box1").addEventListener("change", (event) => {sync1(event);});
-    document.getElementById("box2").addEventListener("change", (event) => {sync2(event);});
+    document.getElementById("box1").addEventListener("change", (event) => {sync(event, "box1");});
+    document.getElementById("box2").addEventListener("change", (event) => {sync(event, "box2");});
 }
 
-const sync1 = (event) => {
+const sync = (event, id) => {
     let body = document.getElementById("tbody");
     while (body.firstChild) {
         body.removeChild(body.firstChild);
@@ -112,48 +112,7 @@ const sync1 = (event) => {
             tbody.appendChild(newRow);
         });
     } else {
-        data.filter(ele => ele["region"] === input).forEach(obj => {
-            let newRow = document.createElement("tr");
-            let newCol1 = document.createElement("td");
-            newCol1.innerHTML = obj["region"];
-            let newCol2 = document.createElement("td");
-            newCol2.innerHTML = obj["model"];
-            let newCol3 = document.createElement("td");
-            newCol3.innerHTML = obj["sales"];
-    
-            newRow.appendChild(newCol1);
-            newRow.appendChild(newCol2);
-            newRow.appendChild(newCol3);
-            tbody.appendChild(newRow);
-        });
-    }    
-}
-
-const sync2 = (event) => {
-    let body = document.getElementById("tbody");
-    while (body.firstChild) {
-        body.removeChild(body.firstChild);
-    }
-
-    let input = event.target.value;
-
-    if (input === "all") {
-        data.forEach(obj => {
-            let newRow = document.createElement("tr");
-            let newCol1 = document.createElement("td");
-            newCol1.innerHTML = obj["region"];
-            let newCol2 = document.createElement("td");
-            newCol2.innerHTML = obj["model"];
-            let newCol3 = document.createElement("td");
-            newCol3.innerHTML = obj["sales"];
-        
-            newRow.appendChild(newCol1);
-            newRow.appendChild(newCol2);
-            newRow.appendChild(newCol3);
-            tbody.appendChild(newRow);
-        });
-    } else {
-        data.filter(ele => ele["model"] === input).forEach(obj => {
+        data.filter(ele => ((id === "box1") ? ele["region"] : ele["model"]) === input).forEach(obj => {
             let newRow = document.createElement("tr");
             let newCol1 = document.createElement("td");
             newCol1.innerHTML = obj["region"];
