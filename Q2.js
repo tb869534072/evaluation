@@ -60,6 +60,20 @@ row1.appendChild(heading2);
 row1.appendChild(heading3);
 thead.appendChild(row1);
 
+data.forEach(obj => {
+    let newRow = document.createElement("tr");
+    let newCol1 = document.createElement("td");
+    newCol1.innerHTML = obj["region"];
+    let newCol2 = document.createElement("td");
+    newCol2.innerHTML = obj["model"];
+    let newCol3 = document.createElement("td");
+    newCol3.innerHTML = obj["sales"];
+
+    newRow.appendChild(newCol1);
+    newRow.appendChild(newCol2);
+    newRow.appendChild(newCol3);
+    tbody.appendChild(newRow);
+});
 
 window.onload = () => {
     document.getElementById("box1").addEventListener("change", (event) => {sync1(event);});
