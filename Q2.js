@@ -37,9 +37,12 @@ models.forEach(model => {
 
 
 
+
+
 let table = document.createElement("table");
 let thead = document.createElement("thead");
 let tbody = document.createElement("tbody");
+tbody.setAttribute("id", "tbody");
 
 table.appendChild(thead);
 table.appendChild(tbody);
@@ -59,6 +62,11 @@ row1.appendChild(heading1);
 row1.appendChild(heading2);
 row1.appendChild(heading3);
 thead.appendChild(row1);
+
+
+
+
+
 
 data.forEach(obj => {
     let newRow = document.createElement("tr");
@@ -81,57 +89,83 @@ window.onload = () => {
 }
 
 const sync1 = (event) => {
-    console.log(document.getElementsByTagName("tbody").removeChild());
-    // document.getElementsByTagName("tbody").remove();
+    let body = document.getElementById("tbody");
+    while (body.firstChild) {
+        body.removeChild(body.firstChild);
+    }
+
     let input = event.target.value;
 
-    const arr = data;
-    arr.filter(ele => ele["region"] === input).forEach(obj => {
-        let newRow = document.createElement("tr");
-        let newCol1 = document.createElement("td");
-        newCol1.innerHTML = obj["region"];
-        let newCol2 = document.createElement("td");
-        newCol2.innerHTML = obj["model"];
-        let newCol3 = document.createElement("td");
-        newCol3.innerHTML = obj["sales"];
-
-        newRow.appendChild(newCol1);
-        newRow.appendChild(newCol2);
-        newRow.appendChild(newCol3);
-        tbody.appendChild(newRow);
-    });
+    if (input === "all") {
+        data.forEach(obj => {
+            let newRow = document.createElement("tr");
+            let newCol1 = document.createElement("td");
+            newCol1.innerHTML = obj["region"];
+            let newCol2 = document.createElement("td");
+            newCol2.innerHTML = obj["model"];
+            let newCol3 = document.createElement("td");
+            newCol3.innerHTML = obj["sales"];
+        
+            newRow.appendChild(newCol1);
+            newRow.appendChild(newCol2);
+            newRow.appendChild(newCol3);
+            tbody.appendChild(newRow);
+        });
+    } else {
+        data.filter(ele => ele["region"] === input).forEach(obj => {
+            let newRow = document.createElement("tr");
+            let newCol1 = document.createElement("td");
+            newCol1.innerHTML = obj["region"];
+            let newCol2 = document.createElement("td");
+            newCol2.innerHTML = obj["model"];
+            let newCol3 = document.createElement("td");
+            newCol3.innerHTML = obj["sales"];
+    
+            newRow.appendChild(newCol1);
+            newRow.appendChild(newCol2);
+            newRow.appendChild(newCol3);
+            tbody.appendChild(newRow);
+        });
+    }    
 }
 
 const sync2 = (event) => {
+    let body = document.getElementById("tbody");
+    while (body.firstChild) {
+        body.removeChild(body.firstChild);
+    }
+
     let input = event.target.value;
 
-    data.filter(ele => ele["model"] === input).forEach(obj => {
-        let newRow = document.createElement("tr");
-        let newCol1 = document.createElement("td");
-        newCol1.innerHTML = obj["region"];
-        let newCol2 = document.createElement("td");
-        newCol2.innerHTML = obj["model"];
-        let newCol3 = document.createElement("td");
-        newCol3.innerHTML = obj["sales"];
-
-        newRow.appendChild(newCol1);
-        newRow.appendChild(newCol2);
-        newRow.appendChild(newCol3);
-        tbody.appendChild(newRow);
-    });
+    if (input === "all") {
+        data.forEach(obj => {
+            let newRow = document.createElement("tr");
+            let newCol1 = document.createElement("td");
+            newCol1.innerHTML = obj["region"];
+            let newCol2 = document.createElement("td");
+            newCol2.innerHTML = obj["model"];
+            let newCol3 = document.createElement("td");
+            newCol3.innerHTML = obj["sales"];
+        
+            newRow.appendChild(newCol1);
+            newRow.appendChild(newCol2);
+            newRow.appendChild(newCol3);
+            tbody.appendChild(newRow);
+        });
+    } else {
+        data.filter(ele => ele["model"] === input).forEach(obj => {
+            let newRow = document.createElement("tr");
+            let newCol1 = document.createElement("td");
+            newCol1.innerHTML = obj["region"];
+            let newCol2 = document.createElement("td");
+            newCol2.innerHTML = obj["model"];
+            let newCol3 = document.createElement("td");
+            newCol3.innerHTML = obj["sales"];
+    
+            newRow.appendChild(newCol1);
+            newRow.appendChild(newCol2);
+            newRow.appendChild(newCol3);
+            tbody.appendChild(newRow);
+        });
+    }    
 }
-// Creating and adding data to rows of the table
-// data.forEach(obj => {
-//     let newRow = document.createElement("tr");
-//     let newCol1 = document.createElement("td");
-//     newCol1.innerHTML = obj["region"];
-//     let newCol2 = document.createElement("td");
-//     newCol2.innerHTML = obj["model"];
-//     let newCol3 = document.createElement("td");
-//     newCol3.innerHTML = obj["sales"];
-
-//     newRow.appendChild(newCol1);
-//     newRow.appendChild(newCol2);
-//     newRow.appendChild(newCol3);
-//     tbody.appendChild(newRow);
-// });
